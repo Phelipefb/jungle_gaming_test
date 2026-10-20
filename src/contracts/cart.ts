@@ -15,6 +15,7 @@ export const appliedCouponSchema = z.object({
 export const cartTotalsSchema = z.object({
   subtotal: moneyAmountSchema,
   discount: moneyAmountSchema,
+  networkFee: moneyAmountSchema,
   total: moneyAmountSchema,
   currency: z.literal("ETH"),
 });
