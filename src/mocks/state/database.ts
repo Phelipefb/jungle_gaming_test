@@ -1,0 +1,70 @@
+import { z } from "zod";
+
+import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
+
+const storageKey = "kurio:mock-database:v1";
+
+const mockSessionSchema = z.object({
+  accessToken: z.string().min(1),
+  userId: z.string().min(1),
+  expiresAt: z.string().datetime({ offset: true }),
+});
+
+const mockDatabaseSchema = z.object({
+  version: z.literal(1),
+  accounts: z.array(mockAccountSchema),
+  session: mockSessionSchema.nullable(),
+});
+
+export type MockSession = z.infer<typeof mockSessionSchema>;
+
+export type MockDatabase = z.infer<typeof mockDatabaseSchema>;
+
+function createInitialDatabase(): MockDatabase {
+  return {
+    version: 1,
+    accounts: structuredClone(accountFixtures),
+    session: null,
+  };
+}
+
+export function readMockDatabase(): MockDatabase {
+  const storedDatabase = localStorage.getItem(storageKey);
+
+  if (!storedDatabase) {
+    const initialDatabase = createInitialDatabase();
+    writeMockDatabase(initialDatabase);
+
+    return initialDatabase;
+  }
+
+  try {
+    const parsedDatabase = mockDatabaseSchema.safeParse(
+      JSON.parse(storedDatabase),
+    );
+
+    if (parsedDatabase.success) {
+      return parsedDatabase.data;
+    }
+  } catch {
+    // O reset abaixo restaura um cenário conhecido.
+  }
+
+  const initialDatabase = createInitialDatabase();
+  writeMockDatabase(initialDatabase);
+
+  return initialDatabase;
+}
+
+export function writeMockDatabase(database: MockDatabase) {
+  const validatedDatabase = mockDatabaseSchema.parse(database);
+
+  localStorage.setItem(storageKey, JSON.stringify(validatedDatabase));
+}
+
+export function resetMockDatabase() {
+  const initialDatabase = createInitialDatabase();
+  writeMockDatabase(initialDatabase);
+
+  return initialDatabase;
+}
