@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 PLANO_DE_DESENVOLVIMENTO.md
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
