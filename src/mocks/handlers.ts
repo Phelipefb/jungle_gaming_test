@@ -1,5 +1,6 @@
 import { toSocketIo } from "@mswjs/socket.io-binding";
 import { http, HttpResponse, ws } from "msw";
+import { nftHandlers } from "@/mocks/handlers/nfts";
 
 const realtime = ws.link("/");
 
@@ -17,4 +18,6 @@ export const handlers = [
       version: 1,
     });
   }),
+
+  ...nftHandlers,
 ];

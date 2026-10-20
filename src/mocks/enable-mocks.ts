@@ -5,5 +5,15 @@ export async function enableMocks() {
 
   const { worker } = await import("./browser");
 
-  await worker.start();
+  await worker.start({
+    onUnhandledRequest(request, print) {
+      const url = new URL(request.url);
+
+      if (!url.pathname.startsWith("/api/")) {
+        return;
+      }
+
+      print.warning();
+    },
+  });
 }

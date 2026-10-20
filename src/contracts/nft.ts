@@ -24,16 +24,40 @@ export const nftImageSchema = z.object({
   alt: z.string().min(1),
 });
 
-export const nftEditionSchema = z.object({
+const nftEditionBaseSchema = {
   id: z.string().min(1),
   name: z.string().min(1),
-  available: z.number().int().nonnegative(),
-  total: z.number().int().positive(),
-});
+  maxPerOrder: z.number().int().positive(),
+};
+
+export const nftEditionSchema = z.discriminatedUnion("type", [
+  z.object({
+    ...nftEditionBaseSchema,
+    type: z.literal("LIMITED"),
+    available: z.number().int().nonnegative(),
+    total: z.number().int().positive(),
+  }),
+  z.object({
+    ...nftEditionBaseSchema,
+    type: z.literal("OPEN"),
+    available: z.null(),
+    total: z.null(),
+  }),
+]);
 
 export const nftAttributeSchema = z.object({
   traitType: z.string().min(1),
   value: z.string().min(1),
+});
+
+export const nftCollectionSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+});
+
+export const nftNetworkSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
 });
 
 export const nftSchema = z.object({
@@ -43,8 +67,11 @@ export const nftSchema = z.object({
   imageUrl: z.string().min(1),
   gallery: z.array(nftImageSchema).min(1),
   category: z.string().min(1),
+  collection: nftCollectionSchema,
+  network: nftNetworkSchema,
   creator: creatorSchema,
   price: priceSchema,
+  previousPrice: priceSchema.nullable(),
   editions: z.array(nftEditionSchema).min(1),
   attributes: z.array(nftAttributeSchema),
   featured: z.boolean(),
@@ -64,3 +91,5 @@ export type NftEdition = z.infer<typeof nftEditionSchema>;
 export type NftAttribute = z.infer<typeof nftAttributeSchema>;
 export type Nft = z.infer<typeof nftSchema>;
 export type NftListResponse = z.infer<typeof nftListResponseSchema>;
+export type NftCollection = z.infer<typeof nftCollectionSchema>;
+export type NftNetwork = z.infer<typeof nftNetworkSchema>;

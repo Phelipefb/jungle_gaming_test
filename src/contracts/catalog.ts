@@ -29,6 +29,8 @@ export const catalogSearchSchema = z
   .object({
     search: optionalTextSearchParamSchema,
     category: optionalTextSearchParamSchema,
+    collection: optionalTextSearchParamSchema,
+    network: optionalTextSearchParamSchema,
     minPrice: optionalMoneySearchParamSchema,
     maxPrice: optionalMoneySearchParamSchema,
     sort: catalogSortSchema.default("featured").catch("featured"),

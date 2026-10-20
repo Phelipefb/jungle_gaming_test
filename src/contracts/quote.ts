@@ -17,14 +17,27 @@ export const quoteRequestSchema = z.object({
 
 export const quoteStatusSchema = z.enum(["VALID", "CHANGED", "UNAVAILABLE"]);
 
-export const quoteItemSchema = z.object({
+const quoteItemBaseSchema = {
   nftId: z.string().min(1),
   editionId: z.string().min(1),
   quantity: z.number().int().positive(),
-  available: z.number().int().nonnegative(),
+  maxPerOrder: z.number().int().positive(),
   unitPrice: priceSchema,
   version: z.number().int().nonnegative(),
-});
+};
+
+export const quoteItemSchema = z.discriminatedUnion("editionType", [
+  z.object({
+    ...quoteItemBaseSchema,
+    editionType: z.literal("LIMITED"),
+    available: z.number().int().nonnegative(),
+  }),
+  z.object({
+    ...quoteItemBaseSchema,
+    editionType: z.literal("OPEN"),
+    available: z.null(),
+  }),
+]);
 
 export const quoteChangeTypeSchema = z.enum([
   "PRICE_CHANGED",
