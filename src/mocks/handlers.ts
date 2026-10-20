@@ -3,6 +3,7 @@ import { http, HttpResponse, ws } from "msw";
 import { nftHandlers } from "@/mocks/handlers/nfts";
 import { authHandlers } from "@/mocks/handlers/auth";
 import { scenarioHandlers } from "@/mocks/handlers/scenarios";
+import { favoriteHandlers } from "@/mocks/handlers/favorites";
 
 const realtime = ws.link("/");
 
@@ -21,6 +22,7 @@ export const handlers = [
     });
   }),
 
+  ...favoriteHandlers,
   ...scenarioHandlers,
   ...authHandlers,
   ...nftHandlers,

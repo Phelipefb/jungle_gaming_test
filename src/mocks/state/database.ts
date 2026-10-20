@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { favoriteSchema } from "@/contracts";
 
 import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
 
@@ -14,6 +15,7 @@ const mockDatabaseSchema = z.object({
   version: z.literal(1),
   accounts: z.array(mockAccountSchema),
   session: mockSessionSchema.nullable(),
+  favoritesByUser: z.record(z.string(), z.array(favoriteSchema)),
 });
 
 export type MockSession = z.infer<typeof mockSessionSchema>;
@@ -25,6 +27,9 @@ function createInitialDatabase(): MockDatabase {
     version: 1,
     accounts: structuredClone(accountFixtures),
     session: null,
+    favoritesByUser: Object.fromEntries(
+      accountFixtures.map(({ user }) => [user.id, []]),
+    ),
   };
 }
 
