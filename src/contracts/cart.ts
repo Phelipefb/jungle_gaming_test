@@ -4,6 +4,7 @@ import { moneyAmountSchema, nftSchema } from "@/contracts/nft";
 
 export const cartItemSchema = z.object({
   nft: nftSchema,
+  editionId: z.string().min(1),
   quantity: z.number().int().positive(),
 });
 
@@ -29,13 +30,14 @@ export const cartSchema = z.object({
 
 export const addCartItemRequestSchema = z.object({
   nftId: z.string().min(1),
+  editionId: z.string().min(1),
   quantity: z.number().int().positive(),
 });
-
 export const updateCartItemRequestSchema = z.object({
+  nftId: z.string().min(1),
+  editionId: z.string().min(1),
   quantity: z.number().int().positive(),
 });
-
 export const applyCouponRequestSchema = z.object({
   code: z.string().trim().min(1, "Informe o código do cupom"),
 });

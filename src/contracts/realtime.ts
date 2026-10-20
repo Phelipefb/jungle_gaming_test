@@ -10,7 +10,7 @@ export const realtimeReadyPayloadSchema = z.object({
 export const nftUpdatedPayloadSchema = z.object({
   nftId: z.string().min(1),
   price: priceSchema,
-  edition: nftEditionSchema,
+  editions: z.array(nftEditionSchema).min(1),
   version: z.number().int().nonnegative(),
 });
 

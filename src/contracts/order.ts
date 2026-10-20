@@ -5,6 +5,7 @@ import { priceSchema } from "@/contracts/nft";
 
 export const checkoutItemSchema = z.object({
   nftId: z.string().min(1),
+  editionId: z.string().min(1),
   quantity: z.number().int().positive(),
 });
 
@@ -21,6 +22,8 @@ export const orderStatusSchema = z.enum(["PENDING", "CONFIRMED", "DECLINED"]);
 
 export const orderItemSchema = z.object({
   nftId: z.string().min(1),
+  editionId: z.string().min(1),
+  editionName: z.string().min(1),
   name: z.string().min(1),
   imageUrl: z.string().min(1),
   unitPrice: priceSchema,
