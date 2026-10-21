@@ -4,6 +4,8 @@ import { MobileCatalogToolbar } from "@/components/catalog/mobile-catalog-toolba
 import { DesktopHomeHero, MobileHomeHero } from "@/components/home/home-hero";
 import { DesktopHeader } from "@/components/layout/desktop-header";
 import { PageContainer } from "@/components/layout/page-container";
+import { CatalogSort } from "@/components/catalog/catalog-sort";
+import { DesktopCatalogFilters } from "@/components/catalog/desktop-catalog-filters";
 
 export function HomePage() {
   return (
@@ -25,10 +27,14 @@ export function HomePage() {
           </PageContainer>
 
           <PageContainer className="mt-24 hidden grid-cols-[312px_1fr] gap-12 xl:grid">
-            <div aria-hidden="true" />
+            <DesktopCatalogFilters />
 
             <div>
-              <CatalogTabs />
+              <div className="flex h-5 items-start justify-between">
+                <CatalogTabs />
+                <CatalogSort />
+              </div>
+
               <CatalogGrid className="mt-8" />
             </div>
           </PageContainer>

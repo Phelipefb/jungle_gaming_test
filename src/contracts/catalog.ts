@@ -36,7 +36,7 @@ export const catalogSearchSchema = z
     network: optionalTextSearchParamSchema,
     minPrice: optionalMoneySearchParamSchema,
     maxPrice: optionalMoneySearchParamSchema,
-    sort: catalogSortSchema.default("featured").catch("featured"),
+    sort: catalogSortSchema.default("newest").catch("newest"),
     page: z.coerce.number().int().positive().default(1).catch(1),
   })
   .superRefine((search, context) => {

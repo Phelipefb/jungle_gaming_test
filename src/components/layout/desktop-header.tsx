@@ -13,7 +13,7 @@ const navigation = [
 
 const defaultHomeSearch = {
   view: "all",
-  sort: "featured",
+  sort: "newest",
   page: 1,
 } as const;
 

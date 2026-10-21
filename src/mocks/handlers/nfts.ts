@@ -93,9 +93,16 @@ export const nftHandlers = [
       );
     }
 
+    if (search.view === "new") {
+      filteredNfts = filteredNfts.slice(0, 16);
+    }
+
+    if (search.view === "trending") {
+      filteredNfts = filteredNfts.filter((nft) => nft.featured);
+    }
+
     switch (search.sort) {
       case "newest":
-        filteredNfts.reverse();
         break;
 
       case "price-asc":

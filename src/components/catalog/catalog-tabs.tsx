@@ -15,7 +15,7 @@ const tabs: ReadonlyArray<{
   {
     label: "Todos os NFTs",
     view: "all",
-    sort: "featured",
+    sort: "newest",
   },
   {
     label: "Novos lançamentos",
