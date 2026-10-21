@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { favoriteSchema, walletSchema } from "@/contracts";
+import { favoriteSchema, quoteSchema, walletSchema } from "@/contracts";
 import { createEmptyMockCart, mockCartSchema } from "@/mocks/state/cart";
 import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
 import { walletFixturesByUser } from "@/mocks/fixtures/wallets";
@@ -20,6 +20,7 @@ const mockDatabaseSchema = z.object({
   cartsByOwner: z.record(z.string(), mockCartSchema),
   walletsByUser: z.record(z.string(), z.array(walletSchema)),
   nextWalletConnectionOutcome: z.enum(["SUCCESS", "REFUSED"]),
+  quotesByUser: z.record(z.string(), z.array(quoteSchema)),
 });
 
 export type MockSession = z.infer<typeof mockSessionSchema>;
@@ -41,6 +42,9 @@ function createInitialDatabase(): MockDatabase {
       ),
     },
     walletsByUser: structuredClone(walletFixturesByUser),
+    quotesByUser: Object.fromEntries(
+      accountFixtures.map(({ user }) => [user.id, []]),
+    ),
     nextWalletConnectionOutcome: "SUCCESS",
   };
 }

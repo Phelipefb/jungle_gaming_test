@@ -1,18 +1,21 @@
 import { z } from "zod";
 
 import { appliedCouponSchema, cartTotalsSchema } from "@/contracts/cart";
-import { priceSchema } from "@/contracts/nft";
+import { moneyAmountSchema, priceSchema } from "@/contracts/nft";
 
 export const quoteRequestItemSchema = z.object({
   nftId: z.string().min(1),
   editionId: z.string().min(1),
   quantity: z.number().int().positive(),
+  unitPrice: priceSchema,
+  version: z.number().int().nonnegative(),
 });
 
 export const quoteRequestSchema = z.object({
   items: z.array(quoteRequestItemSchema).min(1),
   couponCode: z.string().min(1).nullable(),
   networkId: z.string().min(1),
+  networkFee: moneyAmountSchema,
 });
 
 export const quoteStatusSchema = z.enum(["VALID", "CHANGED", "UNAVAILABLE"]);
@@ -55,10 +58,12 @@ export const quoteChangeSchema = z.object({
 export const quoteSchema = z.object({
   id: z.string().min(1),
   status: quoteStatusSchema,
+  networkId: z.string().min(1),
   items: z.array(quoteItemSchema).min(1),
   coupon: appliedCouponSchema.nullable(),
   totals: cartTotalsSchema,
   changes: z.array(quoteChangeSchema),
+  createdAt: z.string().datetime({ offset: true }),
   expiresAt: z.string().datetime({ offset: true }),
 });
 
