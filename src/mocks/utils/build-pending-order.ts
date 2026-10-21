@@ -4,7 +4,7 @@ import {
   type PendingOrder,
   type Quote,
 } from "@/contracts";
-import { nftFixtures } from "@/mocks/fixtures/nfts";
+import { getCurrentNfts } from "@/mocks/utils/get-current-nfts";
 
 type BuildPendingOrderResult =
   | {
@@ -20,10 +20,11 @@ export function buildPendingOrder(
   request: CheckoutRequest,
   quote: Quote,
 ): BuildPendingOrderResult {
+  const currentNfts = getCurrentNfts();
   const items = [];
 
   for (const quoteItem of quote.items) {
-    const nft = nftFixtures.find((item) => item.id === quoteItem.nftId);
+    const nft = currentNfts.find((item) => item.id === quoteItem.nftId);
 
     const edition = nft?.editions.find(
       (item) => item.id === quoteItem.editionId,

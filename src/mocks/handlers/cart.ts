@@ -8,7 +8,7 @@ import {
   applyCouponRequestSchema,
   type ApiErrorCode,
 } from "@/contracts";
-import { nftFixtures } from "@/mocks/fixtures/nfts";
+import { getCurrentNft } from "@/mocks/utils/get-current-nfts";
 import { writeMockDatabase } from "@/mocks/state/database";
 import { buildCartResponse } from "@/mocks/utils/build-cart-response";
 import { getCartContext } from "@/mocks/utils/get-cart-context";
@@ -54,7 +54,7 @@ export const cartHandlers = [
 
     const { nftId, editionId, quantity } = requestResult.data;
 
-    const nft = nftFixtures.find((item) => item.id === nftId);
+    const nft = getCurrentNft(nftId);
 
     if (!nft) {
       return createCartError("NOT_FOUND", "NFT não encontrado.", 404);
@@ -131,7 +131,7 @@ export const cartHandlers = [
 
     const { nftId, editionId, quantity } = requestResult.data;
 
-    const nft = nftFixtures.find((item) => item.id === nftId);
+    const nft = getCurrentNft(nftId);
 
     const edition = nft?.editions.find((item) => item.id === editionId);
 

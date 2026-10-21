@@ -230,19 +230,17 @@ export const orderHandlers = [
 
       writeMockDatabase(context.database);
 
+      if (revalidationResult.quote.status === "UNAVAILABLE") {
+        return createOrderError(
+          "OUT_OF_STOCK",
+          "Um ou mais itens não estão mais disponíveis.",
+          409,
+        );
+      }
+
       return createOrderError(
         "CONFLICT",
         "A cotação mudou. Revise os novos valores antes de continuar.",
-        409,
-      );
-    }
-
-    const quoteWasUsed = orders.some((order) => order.quoteId === quote.id);
-
-    if (quoteWasUsed) {
-      return createOrderError(
-        "CONFLICT",
-        "Esta cotação já foi utilizada.",
         409,
       );
     }

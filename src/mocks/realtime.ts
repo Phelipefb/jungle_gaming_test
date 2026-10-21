@@ -2,8 +2,10 @@ import { toSocketIo } from "@mswjs/socket.io-binding";
 import { ws } from "msw";
 
 import {
+  nftUpdatedPayloadSchema,
   orderUpdatedPayloadSchema,
   realtimeReadyPayloadSchema,
+  type NftUpdatedPayload,
   type OrderUpdatedPayload,
 } from "@/contracts";
 
@@ -39,5 +41,13 @@ export function emitOrderUpdated(payload: OrderUpdatedPayload) {
 
   connectedClients.forEach((client) => {
     client.emit("order.updated", validatedPayload);
+  });
+}
+
+export function emitNftUpdated(payload: NftUpdatedPayload) {
+  const validatedPayload = nftUpdatedPayloadSchema.parse(payload);
+
+  connectedClients.forEach((client) => {
+    client.emit("nft.updated", validatedPayload);
   });
 }

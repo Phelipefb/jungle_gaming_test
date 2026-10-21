@@ -7,7 +7,7 @@ import {
   type QuoteItem,
   type QuoteRequest,
 } from "@/contracts";
-import { nftFixtures } from "@/mocks/fixtures/nfts";
+import { getCurrentNfts } from "@/mocks/utils/get-current-nfts";
 import {
   quoteDurationInMilliseconds,
   quoteNetworkFeeFixture,
@@ -39,6 +39,7 @@ function addChange(changes: QuoteChange[], change: QuoteChange) {
 }
 
 export function buildQuote(request: QuoteRequest): BuildQuoteResult {
+  const currentNfts = getCurrentNfts();
   const quoteItems: QuoteItem[] = [];
   const changes: QuoteChange[] = [];
   const itemKeys = new Set<string>();
@@ -60,7 +61,7 @@ export function buildQuote(request: QuoteRequest): BuildQuoteResult {
 
     itemKeys.add(itemKey);
 
-    const nft = nftFixtures.find((item) => item.id === requestedItem.nftId);
+    const nft = currentNfts.find((item) => item.id === requestedItem.nftId);
 
     if (!nft) {
       return {

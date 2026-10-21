@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   favoriteSchema,
+  nftUpdatedPayloadSchema,
   orderSchema,
   quoteSchema,
   walletSchema,
@@ -30,6 +31,7 @@ const mockDatabaseSchema = z.object({
   session: mockSessionSchema.nullable(),
   favoritesByUser: z.record(z.string(), z.array(favoriteSchema)),
   cartsByOwner: z.record(z.string(), mockCartSchema),
+  nftOverridesById: z.record(z.string(), nftUpdatedPayloadSchema),
   walletsByUser: z.record(z.string(), z.array(walletSchema)),
   nextWalletConnectionOutcome: z.enum(["SUCCESS", "REFUSED"]),
   quotesByUser: z.record(z.string(), z.array(quoteSchema)),
@@ -60,6 +62,7 @@ function createInitialDatabase(): MockDatabase {
         accountFixtures.map(({ user }) => [user.id, createEmptyMockCart()]),
       ),
     },
+    nftOverridesById: {},
     walletsByUser: structuredClone(walletFixturesByUser),
     quotesByUser: Object.fromEntries(
       accountFixtures.map(({ user }) => [user.id, []]),
