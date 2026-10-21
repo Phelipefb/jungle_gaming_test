@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { favoriteSchema } from "@/contracts";
-
+import { createEmptyMockCart, mockCartSchema } from "@/mocks/state/cart";
 import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
 
 const storageKey = "kurio:mock-database:v1";
@@ -16,6 +16,7 @@ const mockDatabaseSchema = z.object({
   accounts: z.array(mockAccountSchema),
   session: mockSessionSchema.nullable(),
   favoritesByUser: z.record(z.string(), z.array(favoriteSchema)),
+  cartsByOwner: z.record(z.string(), mockCartSchema),
 });
 
 export type MockSession = z.infer<typeof mockSessionSchema>;
@@ -30,6 +31,12 @@ function createInitialDatabase(): MockDatabase {
     favoritesByUser: Object.fromEntries(
       accountFixtures.map(({ user }) => [user.id, []]),
     ),
+    cartsByOwner: {
+      guest: createEmptyMockCart(),
+      ...Object.fromEntries(
+        accountFixtures.map(({ user }) => [user.id, createEmptyMockCart()]),
+      ),
+    },
   };
 }
 

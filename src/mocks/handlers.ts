@@ -4,6 +4,7 @@ import { nftHandlers } from "@/mocks/handlers/nfts";
 import { authHandlers } from "@/mocks/handlers/auth";
 import { scenarioHandlers } from "@/mocks/handlers/scenarios";
 import { favoriteHandlers } from "@/mocks/handlers/favorites";
+import { cartHandlers } from "@/mocks/handlers/cart";
 
 const realtime = ws.link("/");
 
@@ -22,6 +23,7 @@ export const handlers = [
     });
   }),
 
+  ...cartHandlers,
   ...favoriteHandlers,
   ...scenarioHandlers,
   ...authHandlers,

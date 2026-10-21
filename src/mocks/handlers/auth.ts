@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import type { z } from "zod";
-
+import { mergeGuestCart } from "@/mocks/utils/merge-guest-cart";
 import {
   apiErrorResponseSchema,
   authResponseSchema,
@@ -53,6 +53,7 @@ function createAuthenticatedSession(database: MockDatabase, user: User) {
     ).toISOString(),
   };
 
+  mergeGuestCart(database, user.id);
   database.session = session;
   writeMockDatabase(database);
 

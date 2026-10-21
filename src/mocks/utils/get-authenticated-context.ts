@@ -15,6 +15,7 @@ type AuthenticatedContext = {
 
 type UnauthenticatedContext = {
   authenticated: false;
+  database: MockDatabase;
   code: "UNAUTHENTICATED" | "SESSION_EXPIRED";
   message: string;
 };
@@ -30,6 +31,7 @@ export function getAuthenticatedContext(): MockAuthenticationContext {
   if (!session) {
     return {
       authenticated: false,
+      database,
       code: "UNAUTHENTICATED",
       message: "Não existe uma sessão ativa.",
     };
@@ -41,6 +43,7 @@ export function getAuthenticatedContext(): MockAuthenticationContext {
 
     return {
       authenticated: false,
+      database,
       code: "SESSION_EXPIRED",
       message: "A sessão expirou. Entre novamente.",
     };
@@ -56,6 +59,7 @@ export function getAuthenticatedContext(): MockAuthenticationContext {
 
     return {
       authenticated: false,
+      database,
       code: "UNAUTHENTICATED",
       message: "A conta da sessão não foi encontrada.",
     };
