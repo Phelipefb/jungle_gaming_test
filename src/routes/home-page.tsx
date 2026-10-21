@@ -6,6 +6,7 @@ import { DesktopHeader } from "@/components/layout/desktop-header";
 import { PageContainer } from "@/components/layout/page-container";
 import { CatalogSort } from "@/components/catalog/catalog-sort";
 import { DesktopCatalogFilters } from "@/components/catalog/desktop-catalog-filters";
+import { CatalogPagination } from "@/components/catalog/catalog-pagination";
 
 export function HomePage() {
   return (
@@ -36,6 +37,7 @@ export function HomePage() {
               </div>
 
               <CatalogGrid className="mt-8" />
+              <CatalogPagination className="mt-10" />
             </div>
           </PageContainer>
         </section>
