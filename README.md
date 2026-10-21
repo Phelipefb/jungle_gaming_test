@@ -2,15 +2,15 @@
 
 Implementação parcial do [Desafio Frontend — Marketplace de NFTs](https://github.com/junglegaming/frontend-challenge#desafio-frontend--marketplace-de-nfts), desenvolvida com React, TypeScript e a stack obrigatória definida no enunciado.
 
-> **Status da entrega:** parcial. A Home e a infraestrutura de dados simulados estão em desenvolvimento. Os fluxos visuais de detalhe, conta, carrinho e compra, os testes E2E, as auditorias Lighthouse e o deploy público ainda não foram concluídos. Consulte [Estado da implementação](#estado-da-implementação) e [Limitações conhecidas](#limitações-conhecidas).
+> **Status da entrega:** parcial. A Home e a infraestrutura de dados simulados estão em desenvolvimento. Os fluxos visuais de detalhe, conta, carrinho e compra, os testes E2E e as auditorias Lighthouse ainda não foram concluídos. Consulte [Estado da implementação](#estado-da-implementação) e [Limitações conhecidas](#limitações-conhecidas).
 
 ## Links da entrega
 
 - Repositório: este repositório.
-- Aplicação publicada: **não disponível**.
+- Aplicação publicada: [jungle-gaming-test-five.vercel.app](https://jungle-gaming-test-five.vercel.app/).
 - Layout de referência: [Figma do desafio](https://www.figma.com/design/PC4lfFG1NXcqoy1oGOSgfu/Frontend-Challenge--Copy-).
 
-O deploy é obrigatório no desafio, mas não foi realizado nesta versão.
+O deploy na Vercel corresponde ao estado parcial documentado neste README e utiliza os mocks no navegador.
 
 ## Stack
 
@@ -317,7 +317,7 @@ As alterações do mock são persistidas antes da emissão, de modo que uma nova
 - configuração e relatórios Lighthouse;
 - `ARCHITECTURE.md` solicitado no enunciado;
 - estratégia de fallback para refresh de rotas no provedor de hospedagem;
-- deploy público.
+- validação completa dos fluxos e das rotas diretamente no ambiente publicado.
 
 ## Estrutura principal
 
@@ -351,7 +351,7 @@ src/
 - Não há simulação geral configurável de latência variável, respostas fora de ordem e indisponibilidade de rede.
 - Não existe evidência versionada de metas Lighthouse.
 - O bundle principal ainda gera aviso de chunk acima de 500 kB no build e precisa de divisão por rotas.
-- Não há URL pública nesta versão.
+- A URL pública apresenta a mesma entrega parcial descrita neste documento.
 
 ## Verificação manual sugerida
 
