@@ -8,6 +8,7 @@ import { walletHandlers } from "@/mocks/handlers/wallets";
 import { quoteHandlers } from "@/mocks/handlers/quotes";
 import { orderHandlers } from "@/mocks/handlers/orders";
 import { realtimeHandler } from "@/mocks/realtime";
+import { profileHandlers } from "@/mocks/handlers/profile";
 
 export const handlers = [
   http.get("/api/health", () => {
@@ -24,6 +25,7 @@ export const handlers = [
   ...walletHandlers,
   ...favoriteHandlers,
   ...scenarioHandlers,
+  ...profileHandlers,
   ...authHandlers,
   ...nftHandlers,
 ];
