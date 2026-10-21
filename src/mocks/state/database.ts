@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { favoriteSchema } from "@/contracts";
+import { favoriteSchema, walletSchema } from "@/contracts";
 import { createEmptyMockCart, mockCartSchema } from "@/mocks/state/cart";
 import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
+import { walletFixturesByUser } from "@/mocks/fixtures/wallets";
 
 const storageKey = "kurio:mock-database:v1";
 
@@ -17,6 +18,8 @@ const mockDatabaseSchema = z.object({
   session: mockSessionSchema.nullable(),
   favoritesByUser: z.record(z.string(), z.array(favoriteSchema)),
   cartsByOwner: z.record(z.string(), mockCartSchema),
+  walletsByUser: z.record(z.string(), z.array(walletSchema)),
+  nextWalletConnectionOutcome: z.enum(["SUCCESS", "REFUSED"]),
 });
 
 export type MockSession = z.infer<typeof mockSessionSchema>;
@@ -37,6 +40,8 @@ function createInitialDatabase(): MockDatabase {
         accountFixtures.map(({ user }) => [user.id, createEmptyMockCart()]),
       ),
     },
+    walletsByUser: structuredClone(walletFixturesByUser),
+    nextWalletConnectionOutcome: "SUCCESS",
   };
 }
 

@@ -35,4 +35,14 @@ export const scenarioHandlers = [
 
     return new HttpResponse(null, { status: 204 });
   }),
+
+  http.post("/api/mock/wallet-connection/refuse-next", () => {
+    const database = readMockDatabase();
+
+    database.nextWalletConnectionOutcome = "REFUSED";
+
+    writeMockDatabase(database);
+
+    return new HttpResponse(null, { status: 204 });
+  }),
 ];

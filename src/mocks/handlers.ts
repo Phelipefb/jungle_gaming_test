@@ -5,6 +5,7 @@ import { authHandlers } from "@/mocks/handlers/auth";
 import { scenarioHandlers } from "@/mocks/handlers/scenarios";
 import { favoriteHandlers } from "@/mocks/handlers/favorites";
 import { cartHandlers } from "@/mocks/handlers/cart";
+import { walletHandlers } from "@/mocks/handlers/wallets";
 
 const realtime = ws.link("/");
 
@@ -24,6 +25,7 @@ export const handlers = [
   }),
 
   ...cartHandlers,
+  ...walletHandlers,
   ...favoriteHandlers,
   ...scenarioHandlers,
   ...authHandlers,
