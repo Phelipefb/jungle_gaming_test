@@ -20,7 +20,7 @@ export function NftCard({ nft }: NftCardProps) {
           <img
             src={nft.imageUrl}
             alt={imageAlt}
-            className="absolute top-3 left-1 h-[166px] w-[calc(100%-0.5rem)] rounded-[16px] object-cover transition-transform duration-300 group-hover:scale-[1.02] xl:top-[30px] xl:h-[250px]"
+            className="absolute top-3 left-1 h-[166px] w-[calc(100%-0.5rem)] rounded-[16px] object-cover transition-transform duration-300 group-hover:scale-[1.02] xl:top-5 xl:h-[250px]"
           />
         </div>
 

@@ -10,7 +10,7 @@ type CatalogGridProps = {
 };
 
 const gridStyles =
-  "grid grid-cols-2 gap-x-[17px] gap-y-[17px] pb-8 xl:grid-cols-3 xl:gap-x-[34px] xl:gap-y-[66px] xl:pb-0";
+  "grid grid-cols-2 gap-x-[17px] gap-y-[17px] pb-8 xl:grid-cols-3 xl:gap-x-[34px] xl:gap-y-[60px] xl:pb-0";
 
 export function CatalogGrid({ className }: CatalogGridProps) {
   const search = useSearch({ from: "/" });

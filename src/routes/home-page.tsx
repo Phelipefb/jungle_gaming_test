@@ -7,6 +7,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { CatalogSort } from "@/components/catalog/catalog-sort";
 import { DesktopCatalogFilters } from "@/components/catalog/desktop-catalog-filters";
 import { CatalogPagination } from "@/components/catalog/catalog-pagination";
+import { DesktopFeaturedNft } from "@/components/catalog/desktop-featured-nft";
 
 export function HomePage() {
   return (
@@ -28,7 +29,10 @@ export function HomePage() {
           </PageContainer>
 
           <PageContainer className="mt-24 hidden grid-cols-[312px_1fr] gap-12 xl:grid">
-            <DesktopCatalogFilters />
+            <div className="space-y-6">
+              <DesktopCatalogFilters />
+              <DesktopFeaturedNft />
+            </div>
 
             <div>
               <div className="flex h-5 items-start justify-between">
@@ -37,7 +41,7 @@ export function HomePage() {
               </div>
 
               <CatalogGrid className="mt-8" />
-              <CatalogPagination className="mt-10" />
+              <CatalogPagination className="mt-20" />
             </div>
           </PageContainer>
         </section>
