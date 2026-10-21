@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { favoriteSchema, quoteSchema, walletSchema } from "@/contracts";
+import {
+  favoriteSchema,
+  orderSchema,
+  quoteSchema,
+  walletSchema,
+} from "@/contracts";
 import { createEmptyMockCart, mockCartSchema } from "@/mocks/state/cart";
 import { accountFixtures, mockAccountSchema } from "@/mocks/fixtures/accounts";
 import { walletFixturesByUser } from "@/mocks/fixtures/wallets";
@@ -12,6 +17,13 @@ const mockSessionSchema = z.object({
   expiresAt: z.string().datetime({ offset: true }),
 });
 
+const mockIdempotencyRecordSchema = z.object({
+  requestFingerprint: z.string().min(1),
+  orderId: z.string().min(1),
+});
+
+const mockOrderOutcomeSchema = z.enum(["CONFIRMED", "DECLINED"]);
+
 const mockDatabaseSchema = z.object({
   version: z.literal(1),
   accounts: z.array(mockAccountSchema),
@@ -21,6 +33,13 @@ const mockDatabaseSchema = z.object({
   walletsByUser: z.record(z.string(), z.array(walletSchema)),
   nextWalletConnectionOutcome: z.enum(["SUCCESS", "REFUSED"]),
   quotesByUser: z.record(z.string(), z.array(quoteSchema)),
+  ordersByUser: z.record(z.string(), z.array(orderSchema)),
+  checkoutIdempotencyByUser: z.record(
+    z.string(),
+    z.record(z.string(), mockIdempotencyRecordSchema),
+  ),
+  pendingOrderOutcomes: z.record(z.string(), mockOrderOutcomeSchema),
+  nextCheckoutOutcome: z.enum(["CONFIRMED", "DECLINED", "TRANSIENT_ERROR"]),
 });
 
 export type MockSession = z.infer<typeof mockSessionSchema>;
@@ -45,7 +64,15 @@ function createInitialDatabase(): MockDatabase {
     quotesByUser: Object.fromEntries(
       accountFixtures.map(({ user }) => [user.id, []]),
     ),
+    ordersByUser: Object.fromEntries(
+      accountFixtures.map(({ user }) => [user.id, []]),
+    ),
+    checkoutIdempotencyByUser: Object.fromEntries(
+      accountFixtures.map(({ user }) => [user.id, {}]),
+    ),
+    pendingOrderOutcomes: {},
     nextWalletConnectionOutcome: "SUCCESS",
+    nextCheckoutOutcome: "CONFIRMED",
   };
 }
 

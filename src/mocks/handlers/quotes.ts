@@ -107,4 +107,30 @@ export const quoteHandlers = [
       { status: 201 },
     );
   }),
+
+  http.post("/api/mock/quotes/:quoteId/expire", ({ params }) => {
+    const context = getAuthenticatedContext();
+
+    if (!context.authenticated) {
+      return createAuthenticationError(context.code, context.message);
+    }
+
+    const userId = context.account.user.id;
+    const quoteId = String(params.quoteId);
+    const quotes = context.database.quotesByUser[userId] ?? [];
+
+    const quote = quotes.find((item) => item.id === quoteId);
+
+    if (!quote) {
+      return createQuoteError("NOT_FOUND", "Cotação não encontrada.", 404);
+    }
+
+    quote.expiresAt = new Date(Date.now() - 60_000).toISOString();
+
+    writeMockDatabase(context.database);
+
+    return new HttpResponse(null, {
+      status: 204,
+    });
+  }),
 ];

@@ -1,5 +1,4 @@
-import { toSocketIo } from "@mswjs/socket.io-binding";
-import { http, HttpResponse, ws } from "msw";
+import { http, HttpResponse } from "msw";
 import { nftHandlers } from "@/mocks/handlers/nfts";
 import { authHandlers } from "@/mocks/handlers/auth";
 import { scenarioHandlers } from "@/mocks/handlers/scenarios";
@@ -7,8 +6,8 @@ import { favoriteHandlers } from "@/mocks/handlers/favorites";
 import { cartHandlers } from "@/mocks/handlers/cart";
 import { walletHandlers } from "@/mocks/handlers/wallets";
 import { quoteHandlers } from "@/mocks/handlers/quotes";
-
-const realtime = ws.link("/");
+import { orderHandlers } from "@/mocks/handlers/orders";
+import { realtimeHandler } from "@/mocks/realtime";
 
 export const handlers = [
   http.get("/api/health", () => {
@@ -17,16 +16,11 @@ export const handlers = [
     });
   }),
 
-  realtime.addEventListener("connection", (connection) => {
-    const socket = toSocketIo(connection);
-
-    socket.client.emit("realtime.ready", {
-      version: 1,
-    });
-  }),
+  realtimeHandler,
 
   ...cartHandlers,
   ...quoteHandlers,
+  ...orderHandlers,
   ...walletHandlers,
   ...favoriteHandlers,
   ...scenarioHandlers,

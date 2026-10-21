@@ -1,11 +1,15 @@
 import type { Socket } from "socket.io-client";
 
-export interface RealtimeReadyEvent {
-  version: number;
-}
+import type {
+  NftUpdatedPayload,
+  OrderUpdatedPayload,
+  RealtimeReadyPayload,
+} from "@/contracts";
 
 interface ServerToClientEvents {
-  "realtime.ready": (payload: RealtimeReadyEvent) => void;
+  "realtime.ready": (payload: RealtimeReadyPayload) => void;
+  "nft.updated": (payload: NftUpdatedPayload) => void;
+  "order.updated": (payload: OrderUpdatedPayload) => void;
 }
 
 let socket: Socket<ServerToClientEvents> | null = null;

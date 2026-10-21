@@ -45,4 +45,24 @@ export const scenarioHandlers = [
 
     return new HttpResponse(null, { status: 204 });
   }),
+
+  http.post("/api/mock/checkout/decline-next", () => {
+    const database = readMockDatabase();
+
+    database.nextCheckoutOutcome = "DECLINED";
+
+    writeMockDatabase(database);
+
+    return new HttpResponse(null, { status: 204 });
+  }),
+
+  http.post("/api/mock/checkout/transient-error-next", () => {
+    const database = readMockDatabase();
+
+    database.nextCheckoutOutcome = "TRANSIENT_ERROR";
+
+    writeMockDatabase(database);
+
+    return new HttpResponse(null, { status: 204 });
+  }),
 ];

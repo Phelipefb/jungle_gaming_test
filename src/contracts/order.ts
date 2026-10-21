@@ -70,9 +70,15 @@ export const orderSchema = z.discriminatedUnion("status", [
   declinedOrderSchema,
 ]);
 
-export const checkoutResponseSchema = z.object({
+export const orderResponseSchema = z.object({
   order: orderSchema,
 });
+
+export const orderListResponseSchema = z.object({
+  items: z.array(orderSchema),
+});
+
+export const checkoutResponseSchema = orderResponseSchema;
 
 export type CheckoutItem = z.infer<typeof checkoutItemSchema>;
 export type CheckoutRequest = z.infer<typeof checkoutRequestSchema>;
@@ -81,3 +87,8 @@ export type OrderItem = z.infer<typeof orderItemSchema>;
 export type OrderTransaction = z.infer<typeof orderTransactionSchema>;
 export type Order = z.infer<typeof orderSchema>;
 export type CheckoutResponse = z.infer<typeof checkoutResponseSchema>;
+export type PendingOrder = z.infer<typeof pendingOrderSchema>;
+export type ConfirmedOrder = z.infer<typeof confirmedOrderSchema>;
+export type DeclinedOrder = z.infer<typeof declinedOrderSchema>;
+export type OrderResponse = z.infer<typeof orderResponseSchema>;
+export type OrderListResponse = z.infer<typeof orderListResponseSchema>;
