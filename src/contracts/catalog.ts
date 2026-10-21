@@ -18,6 +18,8 @@ const optionalMoneySearchParamSchema = z.preprocess(
   moneyAmountSchema.optional(),
 );
 
+export const catalogViewSchema = z.enum(["all", "new", "trending"]);
+
 export const catalogSortSchema = z.enum([
   "featured",
   "newest",
@@ -27,6 +29,7 @@ export const catalogSortSchema = z.enum([
 
 export const catalogSearchSchema = z
   .object({
+    view: catalogViewSchema.default("all").catch("all"),
     search: optionalTextSearchParamSchema,
     category: optionalTextSearchParamSchema,
     collection: optionalTextSearchParamSchema,
@@ -52,3 +55,4 @@ export const catalogSearchSchema = z
 
 export type CatalogSort = z.infer<typeof catalogSortSchema>;
 export type CatalogSearch = z.infer<typeof catalogSearchSchema>;
+export type CatalogView = z.infer<typeof catalogViewSchema>;

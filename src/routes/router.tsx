@@ -7,6 +7,7 @@ import { HomePage } from "./home-page";
 import { NotFoundPage } from "./not-found-page";
 import { RootLayout } from "./root-layout";
 import { RoutePlaceholder } from "./route-placeholder";
+import { catalogSearchSchema } from "@/contracts";
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -16,6 +17,7 @@ const rootRoute = createRootRoute({
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
+  validateSearch: (search) => catalogSearchSchema.parse(search),
   component: HomePage,
 });
 
