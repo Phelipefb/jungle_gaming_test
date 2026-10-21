@@ -7,7 +7,7 @@ Implementação parcial do [Desafio Frontend — Marketplace de NFTs](https://gi
 ## Links da entrega
 
 - Repositório: este repositório.
-- Aplicação publicada: [jungle-gaming-test-five.vercel.app](https://jungle-gaming-test-five.vercel.app/).
+- Deploy na Vercel: [Acessar a aplicação](https://jungle-gaming-test-five.vercel.app/).
 - Layout de referência: [Figma do desafio](https://www.figma.com/design/PC4lfFG1NXcqoy1oGOSgfu/Frontend-Challenge--Copy-).
 
 O deploy na Vercel corresponde ao estado parcial documentado neste README e utiliza os mocks no navegador.
@@ -365,4 +365,4 @@ src/
 
 ## Observação sobre o desafio
 
-O objetivo deste repositório foi organizar primeiro contratos, consistência dos mocks e regras de negócio antes de conectar todas as telas. Essa base está presente, mas o tempo disponível não permitiu concluir a experiência visual, os testes e a publicação exigidos pelo enunciado.
+O objetivo deste repositório foi organizar primeiro contratos, consistência dos mocks e regras de negócio antes de conectar todas as telas. Essa base está presente, mas o tempo disponível não permitiu concluir a experiência visual e os testes exigidos pelo enunciado. A aplicação está publicada no link da Vercel acima.
